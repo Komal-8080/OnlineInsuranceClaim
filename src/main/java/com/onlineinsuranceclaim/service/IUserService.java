@@ -7,7 +7,7 @@ import com.onlineinsuranceclaim.model.UserData;
 
 public interface IUserService {
 
-    UserData createLoginData(RegistrationDTO registrationDTO);
+    UserData userRegistration(RegistrationDTO registrationDTO);
 
-    UserData getLoginDataByUserName(UserDTO userDTO);
+    ResponseToken userLogin(UserDTO userDTO);
 }

@@ -1,6 +1,7 @@
 package com.onlineinsuranceclaim.controllers;
 
 import com.onlineinsuranceclaim.dto.RegistrationDTO;
+import com.onlineinsuranceclaim.dto.ResponseToken;
 import com.onlineinsuranceclaim.dto.UserDTO;
 import com.onlineinsuranceclaim.dto.ResponseDTO;
 import com.onlineinsuranceclaim.model.UserData;
@@ -19,18 +20,19 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<ResponseDTO> userLogin(@RequestBody UserDTO userDTO) {
-        UserData userData = null;
-        userData = loginService.getLoginDataByUserName(userDTO);
-        ResponseDTO respDTO = new ResponseDTO("U have Logged in sucessfully", userData);
+        ResponseToken userData = null;
+        userData = loginService.userLogin(userDTO);
+        ResponseDTO respDTO = new ResponseDTO("User Logged in sucessfully", userData);
         return new ResponseEntity<ResponseDTO>(respDTO, HttpStatus.OK);
     }
 
     @PostMapping("/register")
     public ResponseEntity<ResponseDTO> userRegistration(@RequestBody RegistrationDTO registrationDTO) {
         UserData userData = null;
-        userData = loginService.createLoginData(registrationDTO);
-        ResponseDTO respDTO = new ResponseDTO("Created Employee Payroll Data Successfully", userData);
+        userData = loginService.userRegistration(registrationDTO);
+        ResponseDTO respDTO = new ResponseDTO("User Registered Successfully", userData);
         return new ResponseEntity<ResponseDTO>(respDTO, HttpStatus.OK);
     }
+
 
 }

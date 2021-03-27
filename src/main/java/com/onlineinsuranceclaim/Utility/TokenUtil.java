@@ -45,7 +45,6 @@ public class TokenUtil {
         Claim claim = decodedjwt.getClaim("userId");
         userid = claim.asLong();
         return userid;
-
     }
 
 }
