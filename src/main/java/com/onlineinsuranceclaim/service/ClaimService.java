@@ -31,7 +31,6 @@ public class ClaimService implements IClaimService {
         }
         PolicyData policyData = new PolicyData(policyDataDTO);
         policyData.setUserId(id);
-
         return policyDetailsRepository.save(policyData);
     }
 
@@ -56,15 +55,7 @@ public class ClaimService implements IClaimService {
 
     }
 
-//    @Override
-//    public ReportGeneration createNewReport(ReportGenerationDTO reportGenerationDTO) {
-//        Optional<ReportGeneration> byClaimNumber = reportRepository.findByClaimNumber(reportGenerationDTO.getClaimNumber());
-//        if (byClaimNumber.isPresent()) {
-//            throw new UserException("Report Already Exists");
-//        }
-//        ReportGeneration reportGeneration = new ReportGeneration(reportGenerationDTO);
-//        return reportRepository.save(reportGeneration);
-//    }
+
 //
 //    @Override
 //    public ProfileCreation createNewProfile(ProfileCreationDTO profileCreationDTO) {

@@ -9,11 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
-@RequestMapping("/login/claim")
-public class ClaimController {
+@RequestMapping("/login/Insured")
+public class InsuredController {
 
     @Autowired
     private IClaimService iClaimService;
@@ -41,27 +39,19 @@ public class ClaimController {
         ResponseDTO respDTO = new ResponseDTO("Get Call Sucessfull", claimPolicy);
         return new ResponseEntity<ResponseDTO>(respDTO, HttpStatus.OK);
     }
-//
-////    @PostMapping("/ReprotGeneration")
-////    public ResponseEntity<ResponseDTO> reportGeneration(@RequestBody MakeClaimDTO makeClaimDTO){
-////        MakeClaim makeClaim = null;
-////        makeClaim = iClaimService.getReportGeneration()
-////    }
-//
-//    @PostMapping("/ReprotGeneration")
-//    public ResponseEntity<ResponseDTO> profileCreation(@RequestBody ProfileCreationDTO profileCreationDTO) {
-//        ProfileCreation profileCreation  = null;
-//        profileCreation = iClaimService.createNewProfile(profileCreationDTO);
-//        ResponseDTO respDTO = new ResponseDTO("Profile Created Successfully", profileCreation);
-//        return new ResponseEntity<ResponseDTO>(respDTO, HttpStatus.OK);
-//    }
-//
-//
+
 //    @PostMapping("/ProfileCreation")
 //    public  ResponseEntity<ResponseDTO> reportGeneration(@RequestBody ReportGenerationDTO reportGenerationDTO) {
 //         ReportGeneration reportGeneration  = null;
 //        reportGeneration = iClaimService.createNewReport(reportGenerationDTO);
 //        ResponseDTO respDTO = new ResponseDTO("Report Generated Successfully", reportGeneration);
+//        return new ResponseEntity<ResponseDTO>(respDTO, HttpStatus.OK);
+//    }
+
+//    public ResponseEntity<ResponseDTO> profileCreation(@RequestBody ProfileCreationDTO profileCreationDTO) {
+//        ProfileCreation profileCreation  = null;
+//        profileCreation = iClaimService.createNewProfile(profileCreationDTO);
+//        ResponseDTO respDTO = new ResponseDTO("Profile Created Successfully", profileCreation);
 //        return new ResponseEntity<ResponseDTO>(respDTO, HttpStatus.OK);
 //    }
 }
