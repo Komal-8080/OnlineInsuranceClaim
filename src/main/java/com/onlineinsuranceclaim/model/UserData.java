@@ -1,6 +1,5 @@
 package com.onlineinsuranceclaim.model;
 
-import com.onlineinsuranceclaim.dto.RegistrationDTO;
 import lombok.Data;
 import javax.persistence.*;
 import java.util.List;

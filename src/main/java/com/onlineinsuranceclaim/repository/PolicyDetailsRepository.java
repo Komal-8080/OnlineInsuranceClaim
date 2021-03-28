@@ -9,11 +9,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface PolicyDetailsRepository extends JpaRepository<PolicyData, Integer> {
+public interface PolicyDetailsRepository extends JpaRepository<PolicyData, Long> {
 
 //    List<PolicyData> findByUserName(String userName);
 
-    Optional<UserData> findByUserId(Long id);
+    PolicyData findByUserId(Long id);
 
     Optional<PolicyData> findByPolicyNumber(Long policyNumber);
 }

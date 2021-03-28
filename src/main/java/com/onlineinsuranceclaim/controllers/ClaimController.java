@@ -1,12 +1,15 @@
 package com.onlineinsuranceclaim.controllers;
 
 import com.onlineinsuranceclaim.dto.*;
+import com.onlineinsuranceclaim.model.ClaimPolicy;
 import com.onlineinsuranceclaim.model.PolicyData;
 import com.onlineinsuranceclaim.service.IClaimService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/login/claim")
@@ -15,29 +18,29 @@ public class ClaimController {
     @Autowired
     private IClaimService iClaimService;
 
-    @PostMapping("/newPolicy/{token}")
-    public ResponseEntity<ResponseDTO> enterPolicyDetails(@PathVariable String token,@RequestBody PolicyDataDTO policyDataDTO) {
+    @PostMapping("/CreatePolicy")
+    public ResponseEntity<ResponseDTO> CreatePolicy(@RequestHeader String token,@RequestBody PolicyDataDTO policyDataDTO) {
         PolicyData policyData  = null;
         policyData = iClaimService.CreatePolicy(token,policyDataDTO);
         ResponseDTO respDTO = new ResponseDTO("Details Saved Sucessfully", policyData);
         return new ResponseEntity<ResponseDTO>(respDTO, HttpStatus.OK);
     }
 
-//    @GetMapping("/getPolicy/{userName}")
-//    public ResponseEntity<ResponseDTO> onClaim(@PathVariable("userName") String userName) {
-//        List<PolicyData> policyDataList = null;
-//        policyDataList = iClaimService.getUserPolicies(userName);
-//        ResponseDTO respDTO = new ResponseDTO("Get Call Sucessfull", policyDataList);
-//        return new ResponseEntity<ResponseDTO>(respDTO, HttpStatus.OK);
-//    }
-//
-//    @PutMapping("/makeClaim")
-//    public ResponseEntity<ResponseDTO> makeClaim(@PathVariable("token") String token,@RequestParam("policyNumber") Long policyNumber,@RequestBody ClaimPolicyDTO claimPolicyDTO) {
-//        ClaimPolicy claimPolicy = null;
-//        claimPolicy = iClaimService.getMakeClaim(token,policyNumber, claimPolicyDTO);
-//        ResponseDTO respDTO = new ResponseDTO("Get Call Sucessfull", claimPolicy);
-//        return new ResponseEntity<ResponseDTO>(respDTO, HttpStatus.OK);
-//    }
+    @GetMapping("/getPolicy")
+    public ResponseEntity<ResponseDTO> getUserPolicies(@RequestHeader String token) {
+        PolicyData policyData = null;
+        policyData = iClaimService.getUserPolicies(token);
+        ResponseDTO respDTO = new ResponseDTO("Get Call Sucessfull", policyData);
+        return new ResponseEntity<ResponseDTO>(respDTO, HttpStatus.OK);
+    }
+
+    @PutMapping("/ClaimPolicy")
+    public ResponseEntity<ResponseDTO> claimPolicy(@RequestHeader String token,@RequestParam("policyNumber") Long policyNumber,@RequestBody ClaimPolicyDTO claimPolicyDTO) {
+        ClaimPolicy claimPolicy = null;
+        claimPolicy = iClaimService.claimPolicy(token,policyNumber, claimPolicyDTO);
+        ResponseDTO respDTO = new ResponseDTO("Get Call Sucessfull", claimPolicy);
+        return new ResponseEntity<ResponseDTO>(respDTO, HttpStatus.OK);
+    }
 //
 ////    @PostMapping("/ReprotGeneration")
 ////    public ResponseEntity<ResponseDTO> reportGeneration(@RequestBody MakeClaimDTO makeClaimDTO){

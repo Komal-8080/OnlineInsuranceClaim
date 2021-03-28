@@ -17,20 +17,14 @@ public class ClaimService implements IClaimService {
     private PolicyDetailsRepository policyDetailsRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    private ClaimPolicyRepository claimPolicyRepository;
 
     @Autowired
     private TokenUtil tokenUtil;
 
-//    public UserData getUserDataById(String token){
-//        Long id = tokenUtil.decodeToken(token);
-//        return userRepository.findById(id);
-//    }
-
     @Override
     public PolicyData CreatePolicy(String token, PolicyDataDTO policyDataDTO) {
         Long id = tokenUtil.decodeToken(token);
-        Optional<UserData> userData = policyDetailsRepository.findByUserId(id);
         Optional<PolicyData> byPolicyNumber = policyDetailsRepository.findByPolicyNumber(policyDataDTO.getPolicyNumber());
         if (byPolicyNumber.isPresent()) {
             throw new UserException("Policy Already Exists");
@@ -41,57 +35,26 @@ public class ClaimService implements IClaimService {
         return policyDetailsRepository.save(policyData);
     }
 
-//    @Override
-//    public PolicyData CreatePolicy(String token,PolicyDataDTO policyDataDTO) {
-//        int id = tokenUtil.decodeToken(token);
-//        Optional<UserData> userData = policyDetailsRepository.findByUserId(id);
-//        Optional<PolicyData> byPolicyNumber = policyDetailsRepository.findByPolicyNumberAndUserId(policyDataDTO.getPolicyNumber(),id);
-//        System.out.println("policyNumber:"+byPolicyNumber);
-//        if (byPolicyNumber.isPresent()) {
-//            throw new UserException("Policy Already Exists");
-//        }
-//
-//        System.out.println("Id"+id);
-//        PolicyData policyData = null;
-//        policyData = new PolicyData(policyDataDTO);
-//
-//
-//        userData.get().getPolicyDataList().add(policyData);
-//        userRepository.save(userData.get());
-//        return policyDetailsRepository.save(policyData);
-//    }
+    @Override
+    public PolicyData getUserPolicies(String token) {
+        Long id = tokenUtil.decodeToken(token);
+        return policyDetailsRepository.findByUserId(id);
+    }
 
-//    @Override
-//    public List<PolicyData> getUserPolicies(String userName) {
-//        return policyDetailsRepository.findByUserName(userName);
-//    }
-//
-//    @Override
-//    public ClaimPolicy getMakeClaim(String token, long policyNumber, ClaimPolicyDTO claimPolicyDTO) {
-////        if (makeClaimDTO.getPolicyNumber() != policyNumber) {
-////            throw new UserException("Policy Does not Exists!!");
-////        }else {
-////         int id = tokenUtil.decodeToken(token);
-//           ClaimPolicy claimPolicy = null;
-//           claimPolicy = new ClaimPolicy(claimPolicyDTO.getClaimNumber(), claimPolicyDTO.getClaimReason(), claimPolicyDTO.getClaimType(), claimPolicyDTO.getAccidentCity(), claimPolicyDTO.getAccidentState(), claimPolicyDTO.getAccidentZip(), claimPolicyDTO.getAccidentLocation(), claimPolicyDTO.getPolicyNumber());
-//           return makeClaimRepository.save(claimPolicy);
-////        }
-//
-//    }
-//
-//
-//
-//    private ResponseToken authentication(ClaimPolicyDTO claimPolicyDTO, String token) {
-//
-//        int id = tokenUtil.decodeToken(token);
-//        Optional<PolicyData> policyData = policyDetailsRepository.findByUserid(id);
-//        claimPolicyDTO.setPolicyNumber();
-//        policyData.get().getPolicyNumber().add(policyData);
-//        policyDetailsRepository.save(policyData);
-//        return response;
-//        }
-//
-//    }
+    @Override
+    public ClaimPolicy claimPolicy(String token, Long policyNumber, ClaimPolicyDTO claimPolicyDTO) {
+        Long id = tokenUtil.decodeToken(token);
+        Optional<PolicyData> byPolicyNumber = policyDetailsRepository.findByPolicyNumber(policyNumber);
+        if(byPolicyNumber.isPresent()) {
+            ClaimPolicy claimPolicy = new ClaimPolicy(claimPolicyDTO);
+            claimPolicy.setUserId(id);
+            claimPolicy.setPolicyNumber(policyNumber);
+            return claimPolicyRepository.save(claimPolicy);
+        }else {
+            throw new UserException("Policy Does Not Exists");
+        }
+
+    }
 
 //    @Override
 //    public ReportGeneration createNewReport(ReportGenerationDTO reportGenerationDTO) {
@@ -112,10 +75,5 @@ public class ClaimService implements IClaimService {
 //        ProfileCreation profileCreation = new ProfileCreation(profileCreationDTO);
 //        return profileRepository.save(profileCreation);
 //    }
-//
-//
-//    @Override
-//    public PolicyData EnterPolicyDetails(PolicyDataDTO policyDataDTO) {
-//        return null;
-//    }
+
 }

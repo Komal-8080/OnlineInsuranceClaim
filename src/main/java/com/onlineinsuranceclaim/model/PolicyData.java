@@ -10,16 +10,15 @@ import javax.persistence.*;
 public @Data class PolicyData {
 
     @Id
-    @GeneratedValue
     @Column(name = "policyNumber")
     private Long policyNumber;
     private Long accountNumber;
     private double premiumAmount;
     private Long userId;
 
-//    @OneToOne(cascade = CascadeType.ALL)
-//    @JoinTable(name = "policyclaim",joinColumns = @JoinColumn(name = "policyNumber"))
-//    public ClaimPolicy claimPolicySet;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "policyNumber")
+    private ClaimPolicy claimPolicy;
 
     public PolicyData(PolicyDataDTO policyDataDTO) {
         this.policyNumber = policyDataDTO.getPolicyNumber();
