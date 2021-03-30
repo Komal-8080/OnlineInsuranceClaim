@@ -17,7 +17,6 @@ public @Data class ReportGeneration {
     private String claimReason;
     private String claimType;
     private String details;
-    private Long id;
 
     public ReportGeneration(ReportGenerationDTO reportGenerationDTO){
         this.claimNumber = reportGenerationDTO.getClaimNumber();

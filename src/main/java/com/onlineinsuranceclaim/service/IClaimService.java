@@ -14,12 +14,4 @@ public interface IClaimService {
     PolicyData getUserPolicies(String token);
 
     ClaimPolicy claimPolicy(String token, Long policyNumber, ClaimPolicyDTO claimPolicyDTO);
-
-//    List<PolicyData> getUserPolicies(String userName);
-//
-//    ClaimPolicy getMakeClaim(String token, long policyNumber, ClaimPolicyDTO claimPolicyDTO);
-//
-//    ProfileCreation createNewProfile(ProfileCreationDTO profileCreationDTO);
-//
-//    ReportGeneration createNewReport(ReportGenerationDTO reportGenerationDTO);
 }

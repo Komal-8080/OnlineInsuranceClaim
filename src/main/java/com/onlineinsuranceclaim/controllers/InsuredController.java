@@ -48,10 +48,5 @@ public class InsuredController {
 //        return new ResponseEntity<ResponseDTO>(respDTO, HttpStatus.OK);
 //    }
 
-//    public ResponseEntity<ResponseDTO> profileCreation(@RequestBody ProfileCreationDTO profileCreationDTO) {
-//        ProfileCreation profileCreation  = null;
-//        profileCreation = iClaimService.createNewProfile(profileCreationDTO);
-//        ResponseDTO respDTO = new ResponseDTO("Profile Created Successfully", profileCreation);
-//        return new ResponseEntity<ResponseDTO>(respDTO, HttpStatus.OK);
-//    }
+//
 }

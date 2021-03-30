@@ -23,7 +23,6 @@ public @Data class ClaimPolicy {
     private String accidentState;
     private int accidentZip;
     private String claimType;
-    private Long userId;
 
     public ClaimPolicy(ClaimPolicyDTO claimPolicyDTO) {
         this.claimReason = claimPolicyDTO.getClaimReason();

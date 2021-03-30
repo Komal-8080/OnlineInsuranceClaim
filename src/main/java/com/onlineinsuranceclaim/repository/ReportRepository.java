@@ -7,5 +7,6 @@ import java.util.Optional;
 
 @Repository
 public interface ReportRepository extends JpaRepository<ReportGeneration, Long> {
+
     Optional<ReportGeneration> findByClaimNumber(Long claimNumber);
 }
