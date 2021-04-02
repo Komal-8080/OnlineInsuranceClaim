@@ -1,6 +1,6 @@
 package com.onlineinsuranceclaim.controllers;
 
-import com.onlineinsuranceclaim.dto.ReportGenerationDTO;
+import com.onlineinsuranceclaim.dto.ClaimPolicyDTO;
 import com.onlineinsuranceclaim.dto.ResponseDTO;
 import com.onlineinsuranceclaim.model.ReportGeneration;
 import com.onlineinsuranceclaim.service.IClaimHandlerService;
@@ -10,18 +10,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/login/claimHandler")
+@RequestMapping("/claimHandlerandclaimAdjuster")
 public class ClaimHandlerController {
 
     @Autowired
     IClaimHandlerService iClaimHandlerService;
 
-    @PostMapping("/ReportGeneration")
-    public  ResponseEntity<ResponseDTO> GenerateReport(@RequestHeader String token, @RequestBody ReportGenerationDTO reportGenerationDTO) {
-        ReportGeneration reportGeneration  = null;
-        reportGeneration = iClaimHandlerService.GenerateReport(token,reportGenerationDTO);
-        ResponseDTO respDTO = new ResponseDTO("Report Generated Successfully", reportGeneration);
-        return new ResponseEntity<ResponseDTO>(respDTO, HttpStatus.OK);
+    private ClaimPolicyDTO claimPolicy;
+
+    @GetMapping("/ReportGeneration")
+    public  ResponseEntity<ResponseDTO> GenerateReport(@RequestHeader String token,@RequestParam("policyNumber") Long policyNumber,@RequestParam("claimNumber") Long claimNumber) {
+        ReportGeneration reportGeneration  = iClaimHandlerService.GenerateReport(token,policyNumber,claimNumber);
+        ResponseDTO responseDTO = new ResponseDTO("Report Generated Successfully", reportGeneration);
+        return new ResponseEntity<ResponseDTO>(responseDTO, HttpStatus.OK);
     }
 
 }

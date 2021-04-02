@@ -10,4 +10,5 @@ public @ToString class UserDTO {
 
     private String userName;
     private String password;
+
 }

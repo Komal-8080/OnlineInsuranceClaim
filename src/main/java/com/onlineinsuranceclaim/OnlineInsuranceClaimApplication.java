@@ -8,7 +8,6 @@ import org.springframework.context.ApplicationContext;
 public class OnlineInsuranceClaimApplication {
 
     public static void main(String[] args) {
-
         ApplicationContext context = SpringApplication.run(OnlineInsuranceClaimApplication.class, args);
     }
 

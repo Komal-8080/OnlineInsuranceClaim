@@ -1,8 +1,9 @@
 package com.onlineinsuranceclaim.service;
 
-import com.onlineinsuranceclaim.dto.CreateProfileDTO;
-import com.onlineinsuranceclaim.model.CreateProfile;
+import com.onlineinsuranceclaim.dto.RegistrationDTO;
+import com.onlineinsuranceclaim.model.UserData;
 
 public interface IClaimAdjusterService {
-    CreateProfile createNewProfile(String token, CreateProfileDTO createProfileDTO);
+
+    UserData userRegistration(String token,RegistrationDTO registrationDTO);
 }

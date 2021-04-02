@@ -1,6 +1,5 @@
 package com.onlineinsuranceclaim.model;
 
-import com.onlineinsuranceclaim.dto.ReportGenerationDTO;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.Column;
@@ -18,10 +17,4 @@ public @Data class ReportGeneration {
     private String claimType;
     private String details;
 
-    public ReportGeneration(ReportGenerationDTO reportGenerationDTO){
-        this.claimNumber = reportGenerationDTO.getClaimNumber();
-        this.claimReason = reportGenerationDTO.getClaimReason();
-        this.claimType = reportGenerationDTO.getClaimType();
-        this.details = reportGenerationDTO.getDetails();
-    }
 }
