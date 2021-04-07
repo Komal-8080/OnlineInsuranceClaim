@@ -9,7 +9,11 @@ import javax.validation.constraints.*;
 @Setter
 public @ToString class PolicyDataDTO {
 
+    @Min(value = 100000, message = "Policy Number must have atleast 6 digits")
     private Long policyNumber;
+
+    @Min(value = 100000, message = "Account Number must have atleast 6 digits")
     private Long accountNumber;
+
     private double premiumAmount;
 }

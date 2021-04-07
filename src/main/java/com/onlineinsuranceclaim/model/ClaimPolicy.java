@@ -20,7 +20,7 @@ public @Data class ClaimPolicy {
     private String accidentLocation;
     private String accidentCity;
     private String accidentState;
-    private int accidentZip;
+    private String accidentZip;
     private String claimType;
 
     public ClaimPolicy(ClaimPolicyDTO claimPolicyDTO) {

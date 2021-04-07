@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 @Getter
@@ -19,12 +20,13 @@ public @ToString class ClaimPolicyDTO {
     @NotBlank(message = "Accident City cannot be empty")
     private String accidentCity;
 
-//    @NotBlank(message = "Accident State cannot be empty")
+    @NotBlank(message = "Accident State cannot be empty")
     private String accidentState;
 
-//    @Pattern(regexp = "^[1-9]{1}[0-9]{2}\\s{0,1}[0-9]{3}$", message = "Invalid ZipCode")
-    private int accidentZip;
+    @NotNull(message = "Accident Zip cannot be empty")
+    @Pattern(regexp = "^[1-9]{1}[0-9]{2}\\s{0,1}[0-9]{3}$", message = "Invalid ZipCode")
+    private String accidentZip;
 
-//    @NotBlank(message = "Claim Type cannot be empty")
+    @NotBlank(message = "Claim Type cannot be empty")
     private String claimType;
 }
