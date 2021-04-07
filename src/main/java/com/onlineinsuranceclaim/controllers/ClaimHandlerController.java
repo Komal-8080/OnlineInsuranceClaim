@@ -3,6 +3,7 @@ package com.onlineinsuranceclaim.controllers;
 import com.onlineinsuranceclaim.dto.ClaimPolicyDTO;
 import com.onlineinsuranceclaim.dto.ResponseDTO;
 import com.onlineinsuranceclaim.model.ReportGeneration;
+import com.onlineinsuranceclaim.model.UserData;
 import com.onlineinsuranceclaim.service.IClaimHandlerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,13 @@ public class ClaimHandlerController {
     public  ResponseEntity<ResponseDTO> GenerateReport(@RequestHeader String token,@RequestParam("policyNumber") Long policyNumber,@RequestParam("claimNumber") Long claimNumber) {
         ReportGeneration reportGeneration  = iClaimHandlerService.GenerateReport(token,policyNumber,claimNumber);
         ResponseDTO responseDTO = new ResponseDTO("Report Generated Successfully", reportGeneration);
+        return new ResponseEntity<ResponseDTO>(responseDTO, HttpStatus.OK);
+    }
+
+    @GetMapping("/UserDetails")
+    public ResponseEntity<ResponseDTO> getUserDetails(@RequestHeader String token,@RequestParam("policyNumber") Long policyNumber,@RequestParam("claimNumber") Long claimNumber){
+        UserData userData = iClaimHandlerService.UserDetails(token,policyNumber,claimNumber);
+        ResponseDTO responseDTO = new ResponseDTO("Get Call Successfull",userData);
         return new ResponseEntity<ResponseDTO>(responseDTO, HttpStatus.OK);
     }
 

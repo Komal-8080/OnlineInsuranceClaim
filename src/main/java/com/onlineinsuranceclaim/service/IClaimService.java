@@ -12,5 +12,5 @@ public interface IClaimService {
 
     List<PolicyData> getUserPolicies(String token);
 
-    ClaimPolicy claimPolicy(String token, Long policyNumber, ClaimPolicyDTO claimPolicyDTO);
+    ClaimPolicy makeClaim(String token, Long policyNumber, ClaimPolicyDTO claimPolicyDTO);
 }

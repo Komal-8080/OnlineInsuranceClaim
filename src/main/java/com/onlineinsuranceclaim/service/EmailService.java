@@ -28,7 +28,6 @@ public class EmailService {
     public void sendMail(String token,String subject,String text) {
         Long id = tokenUtil.decodeToken(token);
         Optional<UserData> userData = userRepository.findByUserId(id);
-
         System.out.println("User DATA "+userData);
         if(userData.isPresent()) {
             var mailMessage = new SimpleMailMessage();

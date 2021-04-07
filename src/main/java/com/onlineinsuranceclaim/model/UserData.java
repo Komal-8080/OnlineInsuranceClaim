@@ -1,5 +1,6 @@
 package com.onlineinsuranceclaim.model;
 
+import com.onlineinsuranceclaim.dto.RegistrationDTO;
 import lombok.Data;
 import javax.persistence.*;
 import java.util.List;
@@ -20,21 +21,18 @@ public @Data class UserData {
     private String email;
     private String roleCode;
 
-    public UserData() {
-
-    }
+    public UserData() { }
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "policyNumber")
     private List<PolicyData> policyDataList;
 
-    public UserData(String userName, String password, String firstName, String lastName, String phone, String email,String roleCode) {
-        this.userName = userName;
-        this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.phone = phone;
-        this.email = email;
-        this.roleCode = roleCode;
+    public UserData(RegistrationDTO registrationDTO) {
+        this.userName = registrationDTO.getUserName();
+        this.password = registrationDTO.getPassword();
+        this.firstName = registrationDTO.getFirstName();
+        this.lastName = registrationDTO.getLastName();
+        this.phone = registrationDTO.getPhone();
+        this.email = registrationDTO.getEmail();
+        this.roleCode = registrationDTO.getRoleCode();
     }
 }

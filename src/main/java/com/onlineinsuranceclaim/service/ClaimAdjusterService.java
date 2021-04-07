@@ -23,6 +23,17 @@ public class ClaimAdjusterService implements IClaimAdjusterService {
     private TokenUtil tokenUtil;
 
     @Override
+    public UserData firstClaimAdjuster(RegistrationDTO registrationDTO) {
+        if(userRepository.count() == 0) {
+            UserData userData = new UserData(registrationDTO);
+            userData.setPassword(passwordEncoder.encode(registrationDTO.getPassword()));
+            userData.setRoleCode("ClaimAdjuster");
+            return userRepository.save(userData);
+        }else
+            throw new UserException("Only Claim Adjuster can register users");
+    }
+
+    @Override
     public UserData userRegistration(String token,RegistrationDTO registrationDTO) {
         Long id = tokenUtil.decodeToken(token);
         Optional<UserData> byRoleCode = userRepository.findByUserId(id);
@@ -31,9 +42,11 @@ public class ClaimAdjusterService implements IClaimAdjusterService {
             if (byUserName.isPresent()) {
                 throw new UserException("User Already Exists");
             }
-            UserData userData = new UserData(registrationDTO.getUserName(), passwordEncoder.encode(registrationDTO.getPassword()), registrationDTO.getFirstName(), registrationDTO.getLastName(), registrationDTO.getPhone(), registrationDTO.getEmail(), registrationDTO.getRoleCode());
+            UserData userData = new UserData(registrationDTO);
+            userData.setPassword(passwordEncoder.encode(registrationDTO.getPassword()));
             return userRepository.save(userData);
         } else
             throw new UserException("Invalid User");
     }
+
 }

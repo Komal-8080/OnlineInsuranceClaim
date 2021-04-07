@@ -9,12 +9,7 @@ import javax.validation.constraints.*;
 @Setter
 public @ToString class PolicyDataDTO {
 
-    @NotNull(message = "Invalid Policy Number")
     private Long policyNumber;
-
-    @NotNull(message = "Invalid Account Number")
     private Long accountNumber;
-
-    @NotNull(message = "Premium Amount cannot be empty")
     private double premiumAmount;
 }

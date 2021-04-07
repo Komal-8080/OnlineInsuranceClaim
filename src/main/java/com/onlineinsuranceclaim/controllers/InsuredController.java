@@ -35,7 +35,7 @@ public class InsuredController {
 
     @PutMapping("/ClaimPolicy")
     public ResponseEntity<ResponseDTO> claimPolicy(@RequestHeader String token,@RequestParam("policyNumber") Long policyNumber,@Valid @RequestBody ClaimPolicyDTO claimPolicyDTO) {
-        ClaimPolicy claimPolicy = iClaimService.claimPolicy(token,policyNumber, claimPolicyDTO);
+        ClaimPolicy claimPolicy = iClaimService.makeClaim(token,policyNumber, claimPolicyDTO);
         ResponseDTO responseDTO = new ResponseDTO("Get Call Sucessfull", claimPolicy);
         return new ResponseEntity<ResponseDTO>(responseDTO, HttpStatus.OK);
     }

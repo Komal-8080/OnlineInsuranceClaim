@@ -1,6 +1,5 @@
 package com.onlineinsuranceclaim.model;
 
-import com.onlineinsuranceclaim.dto.ClaimPolicyDTO;
 import com.onlineinsuranceclaim.dto.PolicyDataDTO;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,8 +16,8 @@ public @Data class PolicyData {
     private double premiumAmount;
     private Long userId;
 
+
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "claimNumber")
     private ClaimPolicy claimPolicy;
 
     public PolicyData(PolicyDataDTO policyDataDTO) {

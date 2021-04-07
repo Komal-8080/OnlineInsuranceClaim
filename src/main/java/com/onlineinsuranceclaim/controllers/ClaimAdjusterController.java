@@ -17,8 +17,16 @@ public class ClaimAdjusterController {
     @Autowired
     private IClaimAdjusterService iClaimAdjusterService;
 
-    @PostMapping("/register")
-    public ResponseEntity<ResponseDTO> userRegistration(@RequestHeader String token,@Valid @RequestBody RegistrationDTO registrationDTO) {
+    @PostMapping("/firstClaimAdjuster")
+    public ResponseEntity<ResponseDTO> firstClaimAdjuster(@Valid @RequestBody RegistrationDTO registrationDTO) {
+        UserData userData = null;
+        userData = iClaimAdjusterService.firstClaimAdjuster(registrationDTO);
+        ResponseDTO responseDTO = new ResponseDTO("User Registered Successfully", userData);
+        return new ResponseEntity<ResponseDTO>(responseDTO, HttpStatus.OK);
+    }
+
+    @PostMapping("/registration")
+    public ResponseEntity<ResponseDTO> userRegistration(@RequestHeader String  token,@Valid @RequestBody RegistrationDTO registrationDTO) {
         UserData userData = null;
         userData = iClaimAdjusterService.userRegistration(token,registrationDTO);
         ResponseDTO responseDTO = new ResponseDTO("User Registered Successfully", userData);

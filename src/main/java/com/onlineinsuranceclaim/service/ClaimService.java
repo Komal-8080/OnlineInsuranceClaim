@@ -38,10 +38,13 @@ public class ClaimService implements IClaimService {
         PolicyData policyData = new PolicyData(policyDataDTO);
         policyData.setUserId(id);
         Optional<UserData> userData = userRepository.findByUserId(id);
+        userData.get().getPolicyDataList().add(policyData);
+        userRepository.save(userData.get());
+        PolicyData savePolicy = policyDetailsRepository.save(policyData);
         emailService.sendMail(token,"Thank You For Taking Policy","Dear "+userData.get().getUserName()+"\n"
                 +"We are glad to inform you that your policy is succesfully issued.Kindly find the below policy details."+"\n"+"Policy Number:"+policyData.getPolicyNumber()+"\n"
         + "Account Number:"+policyData.getAccountNumber()+"\n"+"Premium Amount:"+policyData.getPremiumAmount()+"\n"+"Thank You");
-        return policyDetailsRepository.save(policyData);
+        return savePolicy;
     }
 
     @Override
@@ -50,23 +53,31 @@ public class ClaimService implements IClaimService {
         List<PolicyData> policyData = policyDetailsRepository.findByUserId(id);
         if (policyData.isEmpty()) {
             throw new UserException("Policy does not exists");
-        } else
-            return policyDetailsRepository.findByUserId(id);
+        } else {
+            for ( PolicyData policy : policyData) {
+                Optional<ClaimPolicy> claimByPolicy = claimPolicyRepository.findByPolicyNumber(policy.getPolicyNumber());
+                if(claimByPolicy.isPresent()){
+                    policy.setClaimPolicy(claimByPolicy.get());
+                }
+            }
+            return policyData;
+        }
     }
 
     @Override
-    public ClaimPolicy claimPolicy(String token, Long policyNumber, ClaimPolicyDTO claimPolicyDTO) {
+    public ClaimPolicy makeClaim(String token, Long policyNumber, ClaimPolicyDTO claimPolicyDTO) {
         Long id = tokenUtil.decodeToken(token);
         Optional<PolicyData> byPolicyNumber = policyDetailsRepository.findByUserIdAndPolicyNumber(id, policyNumber);
-        Optional<ClaimPolicy> byPolicy = claimPolicyRepository.findByPolicyNumber(policyNumber);
-        if (byPolicyNumber.isPresent() & !byPolicy.isPresent()) {
+        Optional<ClaimPolicy> claimByPolicy = claimPolicyRepository.findByPolicyNumber(policyNumber);
+        if (byPolicyNumber.isPresent() & !claimByPolicy.isPresent()) {
             ClaimPolicy claimPolicy = new ClaimPolicy(claimPolicyDTO);
             claimPolicy.setPolicyNumber(policyNumber);
-            PolicyData policyData = new PolicyData();
             Optional<UserData> userData = userRepository.findByUserId(id);
+            policyDetailsRepository.save(byPolicyNumber.get());
+            ClaimPolicy saveClaim = claimPolicyRepository.save(claimPolicy);
             emailService.sendMail(token,"Regarding Claim for Policy Number "+byPolicyNumber.get().getPolicyNumber(),"Dear "+userData.get().getUserName()+"\n"
                     +"This is To inform you that your claim request is sucessfully submitted.");
-            return claimPolicyRepository.save(claimPolicy);
+            return saveClaim;
         } else {
             throw new UserException("Policy Does Not Exists");
         }
